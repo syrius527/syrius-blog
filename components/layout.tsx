@@ -11,7 +11,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <div>
+      <div className="h-20"></div>
+      <div className="bg-primary">
         {children}
       </div>
       <Footer />
