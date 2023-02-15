@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 .bg-primary {
-  @apply bg-white dark:bg-zinc-900
+    @apply bg-white dark:bg-zinc-900;
 }
 
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  @apply bg-gray-300/20 dark:bg-neutral-400/30
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    @apply bg-gray-300/20 dark:bg-neutral-400/30;
 }
 
 footer {
-  @apply bg-white dark:bg-zinc-900
+    @apply bg-white dark:bg-zinc-900;
 }
 
 h1 {
-  @apply text-black dark:text-gray-200
+    @apply text-black dark:text-gray-200;
 }
 
 p {
-  @apply text-black dark:text-gray-400
+    @apply text-black dark:text-gray-400;
 }
