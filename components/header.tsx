@@ -1,5 +1,6 @@
 import Link from "next/link";
-import DarkModeToggleButton from "./dark-mode-button";
+import AccountButton from "./buttons/account-button";
+import DarkModeToggleButton from "./buttons/dark-mode-button";
 
 export default function Header() {
   return (
@@ -19,6 +20,7 @@ export default function Header() {
             <Link href="/about" className="mr-5 subpixel-antialiased font-semibold hover:underline decoration-sky-400 decoration-2 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">About</Link>
           </nav>
           <DarkModeToggleButton />
+          <AccountButton />
         </div>
       </header>
     </>
