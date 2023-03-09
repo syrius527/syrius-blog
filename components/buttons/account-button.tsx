@@ -1,26 +1,23 @@
-import { useSession } from "next-auth/react";
 import { useAuth } from "../../lib/auth/useAuth";
 
 export default function AccountButton() {
-    const { data: session } = useSession();
-    const { loggedUser, loading, signInWithGithub, signOut } = useAuth();
+    const { loggedUser, loggedIn, loading, signInWithGithub, signOut } = useAuth();
 
     return (
         <>
-            {session && session.user ? (
-                <button className="bg-primary" onClick={signOut}>
-                    Logout
-                </button>
-            ) : (
-                // <a className="bg-primary" href="/api/auth/signin">Login</a>
+            {loggedIn ? (
                 <>
-                    <button className="bg-primary" onClick={signInWithGithub}>
-                        Login
+                    <button className="bg-primary" onClick={signOut}>
+                        Logout
                     </button>
                     <button onClick={() => console.log(loggedUser)}>
                         print
                     </button>
                 </>
+            ) : (
+                <button className="bg-primary" onClick={signInWithGithub}>
+                    Login
+                </button>
             )}
         </>
     );

@@ -1,8 +1,11 @@
 import Lottie from "react-lottie-player";
 import animationData from "../../public/happy-programmer.json";
 // import CodeBlock from "../code-block";
+import { useAuth } from "../../lib/auth/useAuth";
 
 export default function Hero() {
+    const { loggedUser } = useAuth();
+    
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -20,6 +23,7 @@ export default function Hero() {
                         <br className="hidden lg:inline-block" />
                         readymade gluten
                     </h1>
+                    {/* <p>{loggedUser ? loggedUser.email : "none"}</p> */}
                     <div>
                         {/* <CodeBlock
                           text={
@@ -36,7 +40,7 @@ export default function Hero() {
                         /> */}
                     </div>
                     <p className="mb-8 leading-relaxed">
-                        
+                        {loggedUser ? loggedUser.email : "none"}
                     </p>
                     <div className="flex justify-center">
                         <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">

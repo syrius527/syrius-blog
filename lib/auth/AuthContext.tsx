@@ -1,19 +1,18 @@
 import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/router";
 import React, {
     createContext,
-    FunctionComponent,
     useState,
     useEffect,
     SyntheticEvent,
-    ReactNode,
-    ReactElement,
 } from "react";
 import { supabase } from "../supabase/supabase";
 
 export type AuthContextProps = {
-    loggedUser: User;
+    loggedUser: User|null;
     signInWithGithub: (evt: SyntheticEvent) => void;
-    signOut: (evt: SyntheticEvent) => void;
+    // signOut: (evt: SyntheticEvent) => void;
+    signOut: () => void;
     loading: boolean;
     loggedIn: boolean;
     userLoading: boolean;
@@ -22,26 +21,71 @@ export type AuthContextProps = {
 export const AuthContext = createContext<Partial<AuthContextProps>>({});
 
 export const AuthProvider = (props: any) => {
+    const [loggedUser, setLoggedUser] = useState<User|null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [loggedUser, setLoggedUser] = useState<User>();
-    const [response, setResponse] = useState<any>(null);
+    // const [response, setResponse] = useState<any>(null);
     const [userLoading, setUserLoading] = useState<boolean>(true);
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+    const router = useRouter();
 
     const signInWithGithub = async (evt: SyntheticEvent) => {
         evt.preventDefault();
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: "github",
         });
-        // const { data: { user } } = await supabase.auth.getUser();
-        const { session, user } = data;
-        if (user) setLoggedUser(user);
+        if (error) {
+            alert(error);
+        }
     };
 
-    const signOut = async (evt: SyntheticEvent) => {
-        evt.preventDefault();
-        await supabase.auth.signOut();
+    // const router = useRouter();
+
+    const signOut = async () => {
+        // evt.preventDefault();
+        const { error } = await supabase.auth.signOut();
+        console.log(error);
+        if (error) {
+            alert(error);
+        } else {
+            setLoggedUser(null);
+            setLoggedIn(false);
+        }
     };
+
+    useEffect(() => {
+        const settingUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                setLoggedUser(user);
+                setLoggedIn(true);
+                router.push("/");
+            } else {
+                setUserLoading(false);
+            }
+
+            const { data: authListener } = supabase.auth.onAuthStateChange(
+                async (event, session) => {
+                    const user = session?.user! ?? null;
+                    if (user) {
+                        setLoggedUser(user);
+                        setLoggedIn(true);
+                        router.push("/");
+                    } else {
+                        setLoggedUser(null);
+                        setLoggedIn(false);
+                        router.push("/");
+                    }
+                }
+            );
+
+            return () => {
+                authListener.subscription.unsubscribe();
+            };
+        };
+
+        settingUser();
+    }, []);
 
     return (
         <AuthContext.Provider
