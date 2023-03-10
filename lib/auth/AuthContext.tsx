@@ -42,9 +42,8 @@ export const AuthProvider = (props: any) => {
     // const router = useRouter();
 
     const signOut = async () => {
-        // evt.preventDefault();
         const { error } = await supabase.auth.signOut();
-        console.log(error);
+        
         if (error) {
             alert(error);
         } else {
