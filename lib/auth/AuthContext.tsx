@@ -1,4 +1,4 @@
-import { User } from "@supabase/supabase-js";
+import { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import React, {
     createContext,
@@ -52,6 +52,15 @@ export const AuthProvider = (props: any) => {
         }
     };
 
+    const setServerSession = async (event: AuthChangeEvent, session: Session) => {
+        await fetch("/api/auth", {
+            method: "POST",
+            headers: new Headers({ "Content-Type": "application/json" }),
+            credentials: "same-origin",
+            body: JSON.stringify({ event, session }),
+        });
+    };
+
     useEffect(() => {
         const settingUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
@@ -66,6 +75,8 @@ export const AuthProvider = (props: any) => {
             const { data: authListener } = supabase.auth.onAuthStateChange(
                 async (event, session) => {
                     const user = session?.user! ?? null;
+                    // await setServerSession(event, session!);
+
                     if (user) {
                         setLoggedUser(user);
                         setLoggedIn(true);

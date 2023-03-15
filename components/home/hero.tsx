@@ -2,9 +2,14 @@ import Lottie from "react-lottie-player";
 import animationData from "../../public/happy-programmer.json";
 // import CodeBlock from "../code-block";
 import { useAuth } from "../../lib/auth/useAuth";
+import { supabase } from "../../lib/supabase/supabase";
 
 export default function Hero() {
     const { loggedUser } = useAuth();
+    const printSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log(session);
+    };
     
     return (
         <section className="text-gray-600 body-font">
@@ -43,7 +48,7 @@ export default function Hero() {
                         {loggedUser ? loggedUser.email : "none"}
                     </p>
                     <div className="flex justify-center">
-                        <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                        <button onClick={printSession} className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
                             Button
                         </button>
                         <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
