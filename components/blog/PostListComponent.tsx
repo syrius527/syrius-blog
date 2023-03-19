@@ -7,7 +7,7 @@ export interface PostProps {
     inserted_at: string;
 }
 
-export default function PostList({ post }: { post: PostProps }) {
+export default function PostListComponent({ post }: { post: PostProps }) {
     const { id, user_id, user_email, title, content, inserted_at } = post;
     return (
         // <div className="container px-5 py-5 mx-auto">
@@ -17,7 +17,7 @@ export default function PostList({ post }: { post: PostProps }) {
                         <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 dark:text-gray-500 mb-1">CATEGORY</h2>
                     <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 dark:text-white mb-3">Title: {title} Id: {id}</h1>
                     <p className="leading-relaxed mb-3">{content}</p>
-                    <a className="text-indigo-500 dark:text-indigo-400 inline-flex items-center">Learn More
+                    <a href={`/blog/${id}`} className="text-indigo-500 dark:text-indigo-400 inline-flex items-center">Learn More
                         <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="M12 5l7 7-7 7"></path>

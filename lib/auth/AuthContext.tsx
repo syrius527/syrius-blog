@@ -67,7 +67,7 @@ export const AuthProvider = (props: any) => {
             if (user) {
                 setLoggedUser(user);
                 setLoggedIn(true);
-                router.push("/");
+                // router.push("/");
             } else {
                 setUserLoading(false);
             }
@@ -80,11 +80,11 @@ export const AuthProvider = (props: any) => {
                     if (user) {
                         setLoggedUser(user);
                         setLoggedIn(true);
-                        router.push("/");
+                        // router.push("/");
                     } else {
                         setLoggedUser(null);
                         setLoggedIn(false);
-                        router.push("/");
+                        // router.push("/");
                     }
                 }
             );
