@@ -3,14 +3,18 @@ import animationData from "../../public/happy-programmer.json";
 // import CodeBlock from "../code-block";
 import { useAuth } from "../../lib/auth/useAuth";
 import { supabase } from "../../lib/supabase/supabase";
+import { useMessage } from "../../lib/message";
+import MessageComponent from "../message/MessageComponent";
 
 export default function Hero() {
     const { loggedUser } = useAuth();
+    const { messages, handleMessage } = useMessage();
+
     const printSession = async () => {
         const { data: { session } } = await supabase.auth.getSession();
         console.log(session);
     };
-    
+
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -51,10 +55,11 @@ export default function Hero() {
                         <button onClick={printSession} className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
                             Button
                         </button>
-                        <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                        <button onClick={() => handleMessage?.({message: "hi", type: "success"})} className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
                             Button
                         </button>
                     </div>
+                    {/* {messages && <MessageComponent messages={messages}/>} */}
                 </div>
             </div>
         </section>
